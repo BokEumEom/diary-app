@@ -1,0 +1,85 @@
+// react_native/app/(main)/onboard/index.tsx
+import React from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import Onboarding from 'react-native-onboarding-swiper';
+import { Link } from 'expo-router';
+import { Image } from 'expo-image';
+import Button from '@/components/common/Button';
+
+const { width, height } = Dimensions.get('window');
+
+const OnboardingScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Onboarding
+        pages={[
+          {
+            backgroundColor: '#fff',
+            image: (
+              <Image
+                source={require('@/assets/images/image0.jpg')}
+                style={styles.image}
+                contentFit="cover"
+                transition={1000}
+              />
+            ),
+            title: '',
+            subtitle: 'Explore the world around you',
+          },
+          {
+            backgroundColor: '#fff',
+            image: (
+              <Image
+                source={require('@/assets/images/image1.jpg')}
+                style={styles.image}
+                contentFit="cover"
+                transition={1000}
+              />
+            ),
+            title: '',
+            subtitle: 'Write about every moment',
+          },
+          {
+            backgroundColor: '#fff',
+            image: (
+              <Image
+                source={require('@/assets/images/image2.jpg')}
+                style={styles.image}
+                contentFit="cover"
+                transition={1000}
+              />
+            ),
+            title: '',
+            subtitle: 'Capture your thoughts and ideas',
+          },
+        ]}
+        bottomBarHighlight={false}
+        showNext={false}
+        showSkip={false}
+        DoneButtonComponent={() => <View />} // 빈 뷰로 대체
+      />
+      <Link href="/(auth)/signup" asChild>
+        <Button title="Create Account" buttonClassName="bg-gray-800 mt-3" />
+      </Link>
+      <Link href="/(auth)/login" asChild>
+        <Button title="Login" buttonClassName="bg-gray-200 mt-3" textClassName="text-gray-800" />
+      </Link>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  image: {
+    width: width * 0.9,
+    height: width,
+    borderRadius: 20,
+    marginBottom: 20,
+  }
+});
+
+export default OnboardingScreen;

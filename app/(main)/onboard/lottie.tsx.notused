@@ -1,0 +1,86 @@
+// react_native/app/(main)/index.tsx
+// react_native/app/(main)/onboard/index.tsx
+import React, { useRef, useEffect } from 'react';
+import { Button, View, StyleSheet, Text, Dimensions } from 'react-native';
+import Onboarding from 'react-native-onboarding-swiper';
+import LottieView from 'lottie-react-native';
+import { Link } from 'expo-router';
+
+const { width, height } = Dimensions.get('window');
+
+const OnboardingImage = ({ source }) => {
+  const animation = useRef(null);
+
+  useEffect(() => {
+    animation.current?.play();
+  }, []);
+
+  return (
+    <View style={styles.lottie}>
+      <LottieView
+        ref={animation}
+        style={{ width: "100%", height: "100%" }}
+        source={source}
+      />
+    </View>
+  );
+};
+
+export default function OnboardingScreen() {
+  const doneButton = ({ ...props }) => (
+    <Link href="/(auth)/login" style={styles.doneButton} {...props}>
+      <Text>Done</Text>
+    </Link>
+  );
+
+  return (
+    <View style={styles.container}>
+      <Onboarding
+        onDone={() => {}}
+        onSkip={() => {}}
+        DoneButtonComponent={doneButton}
+        containerStyles={styles.onboardingContainer}
+        pages={[
+          {
+            backgroundColor: '#a7f3d0',
+            image: <OnboardingImage source={require('@/assets/animations/littlewitch.json')} />,
+            title: '구슬 같은 시간을 되찾다, 비드와 함께',
+            subtitle: '빠르게 변화하는 일상 속에서 진정한 나를 돌아보는 소중한 시간을 비드에서 만나보세요',
+          },
+          {
+            backgroundColor: '#fef3c7',
+            image: <OnboardingImage source={require('@/assets/animations/calendar.json')} />,
+            title: '내일을 위한 오늘, 비드로 시작하세요',
+            subtitle: '비드의 일기와 감정 기록 기능으로 더 나은 일상을 만들어 가세요',
+          },
+          {
+            backgroundColor: '#a78bfa',
+            image: <OnboardingImage source={require('@/assets/animations/star.json')} />,
+            title: '소중한 나를 위한 시간, 비드로 시작하세요',
+            subtitle: '비드가 제공하는 맞춤형 자기 성찰 가이드로 진정한 성장을 경험해보세요',
+          },
+        ]}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
+  },
+  lottie: {
+    flex: 1,
+    width: width,
+    height: height,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  onboardingContainer: {
+    paddingHorizontal: 15
+  },
+  doneButton: {
+    padding: 20,
+  },
+});
